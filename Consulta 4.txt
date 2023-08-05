@@ -1,0 +1,9 @@
+SELECT cine.pelicula.CODPELI, TITULO, GENERO, FECESTRENO AS 'FECHA DE ESTRENO', 
+ESPECTADORES, round(RECAUDACION, 2) AS RECAUDACION, 
+CIUDAD, PAIS FROM 
+(((cine.pelicula inner join cine.estrenos on cine.pelicula.CODPELI = cine.estrenos.CODPELI)
+inner join cine.genero on cine.pelicula.CODGEN = cine.genero.CODGEN)
+inner join cine.ciudad on cine.estrenos.CODCIUDAD = cine.ciudad.CODCIUDAD)
+inner join cine.pais on cine.pais.CODPAIS = cine.ciudad.CODPAIS
+WHERE FECESTRENO >= '2015-01-01' AND FECESTRENO <= '2021-12-31' AND ESPECTADORES > 8000000
+ORDER BY RECAUDACION

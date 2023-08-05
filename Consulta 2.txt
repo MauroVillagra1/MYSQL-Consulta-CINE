@@ -1,0 +1,9 @@
+SELECT count(cine.pelicula.CODDIRE) as 'CANT DE PELICULAS', 
+NOMAPE as DIRECTOR, 
+CONCAT(ROUND(datediff(current_date(), FECNAC)/365), " Años") as EDAD, 
+FECNAC AS 'FECHA DE NACIMIENTO' 
+FROM 
+cine.director inner join cine.pelicula on cine.director.CODDIRE = cine.pelicula.CODDIRE
+group by cine.pelicula.CODDIRE 
+having count(cine.pelicula.CODDIRE) > 3 AND EDAD > 50  
+order by EDAD

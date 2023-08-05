@@ -1,0 +1,9 @@
+select cine.pelicula.CODPELI, cine.pelicula.TITULO, cine.genero.GENERO, cine.pelicula.ANOPROD, cine.director.NOMAPE, CONCAT(round(datediff(current_date(), FECNAC)/365), " Años") as EDAD, cine.ciudad.CIUDAD, cine.pais.PAIS, month(cine.estrenos.FECESTRENO) AS mes, cine.estrenos.RECAUDACION
+from ((((cine.pelicula inner join cine.estrenos on cine.pelicula.CODPELI = cine.estrenos.CODPELI)
+inner join cine.ciudad on cine.ciudad.CODCIUDAD = cine.estrenos.CODCIUDAD)
+inner join cine.director on cine.pelicula.CODDIRE = cine.director.CODDIRE)
+inner join cine.genero on cine.pelicula.CODGEN = cine.genero.CODGEN)
+inner join cine.pais on cine.ciudad.CODPAIS = cine.pais.CODPAIS
+group by cine.estrenos.RECAUDACION, cine.pelicula.CODPELI, cine.pelicula.TITULO, cine.genero.GENERO, cine.pelicula.ANOPROD, cine.director.NOMAPE, EDAD, cine.ciudad.CIUDAD, cine.pais.PAIS, MES
+having mes >=8 and mes <= 11 and edad > 53 and anoprod > 1998 and RECAUDACION > 20000000
+ORDER BY titulo

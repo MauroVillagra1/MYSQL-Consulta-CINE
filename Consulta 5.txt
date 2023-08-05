@@ -1,0 +1,10 @@
+SELECT cine.pelicula.CODPELI AS 'COD.PELICULA', TITULO, 
+ANOPROD AS 'AÑO PRODUCCION', GENERO, 
+NOMAPE AS DIRECTOR, 
+CONCAT(RECAUDACION, " Us$") AS RECAUDACION 
+FROM 
+((cine.pelicula inner join cine.genero on cine.pelicula.CODGEN = cine.genero.CODGEN)
+inner join cine.director on cine.pelicula.CODDIRE = cine.director.CODDIRE)
+inner join cine.estrenos on cine.pelicula.CODPELI = cine.estrenos.CODPELI
+WHERE GENERO = 'COMEDIA'
+ORDER BY TITULO, ANOPROD

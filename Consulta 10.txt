@@ -1,0 +1,17 @@
+SELECT pelicula.CODPELI, pelicula.TITULO,
+pelicula.ANOPROD, genero.GENERO,
+CONCAT(director.NOMAPE, ' ', director.NOMAPE) AS NOMBRE_DIRECTOR, estrenos.ESPECTADORES,
+CONCAT(estrenos.RECAUDACION, ' Us$') AS TOTAL_RECAUDADO
+FROM pelicula
+JOIN genero ON pelicula.CODGEN = genero.CODGEN
+JOIN director ON pelicula.CODDIRE = director.CODDIRE
+JOIN estrenos ON pelicula.CODPELI = estrenos.CODPELI
+WHERE genero.GENERO = 'comedia'
+AND estrenos.ESPECTADORES < (
+SELECT AVG(estrenos2.ESPECTADORES)
+FROM estrenos estrenos2
+JOIN pelicula pelicula2 ON estrenos2.CODPELI = pelicula2.CODPELI
+JOIN genero genero2 ON pelicula2.CODGEN = genero2.CODGEN
+WHERE genero2.GENERO = 'negro'
+)
+ORDER BY pelicula.TITULO, pelicula.ANOPROD;

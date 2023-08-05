@@ -1,0 +1,12 @@
+SELECT pais.PAIS,
+genero.GENERO, COUNT(estrenos.CODPELI) AS CANTIDAD_DE_PELICULAS,
+SUM(estrenos.RECAUDACION) AS TOTAL_RECAUDADO
+FROM estrenos
+JOIN pelicula ON estrenos.CODPELI = pelicula.CODPELI
+JOIN genero ON pelicula.CODGEN = genero.CODGEN
+JOIN ciudad ON estrenos.CODCIUDAD = ciudad.CODCIUDAD
+JOIN pais ON ciudad.CODPAIS = pais.CODPAIS
+WHERE genero.GENERO IN ('animadas', 'terror', 'musical', 'negro')
+GROUP BY pais.PAIS, genero.GENERO
+HAVING COUNT(estrenos.CODPELI) >= 1 AND SUM(estrenos.RECAUDACION) > 19000000
+ORDER BY pais.PAIS, genero.GENERO, COUNT(estrenos.CODPELI) DESC;

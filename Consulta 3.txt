@@ -1,0 +1,13 @@
+SELECT cine.genero.GENERO,count(Genero) as 'CANT. DE PELICULAS', 
+round(sum(RECAUDACION), 2) as 'TOTAL RECAUDADO', 
+NOMAPE AS DIRECTOR, CIUDAD AS 'CIUDAD DE RESIDENCIA', 
+PAIS 
+FROM 
+((((cine.pelicula inner join cine.genero on cine.pelicula.CODGEN = cine.genero.CODGEN)
+inner join cine.director on cine.pelicula.CODDIRE = cine.director.CODDIRE)
+inner join cine.estrenos on cine.pelicula.CODPELI = cine.estrenos.CODPELI)
+inner join cine.ciudad on cine.director.CODCIUDAD = cine.ciudad.CODCIUDAD)
+inner join cine.pais on cine.ciudad.CODPAIS = cine.pais.CODPAIS
+group by 'TOTAL RECAUDADO', genero, nomape, ciudad, pais, 'CANT. DE PELICULAS' 
+having count(genero) >= 1 and sum(RECAUDACION) > 25000000 
+ORDER BY 'CANT. DE PELICULAS', GENERO

@@ -1,0 +1,13 @@
+SELECT CODPELI AS 'COD. PELICULA', 
+TITULO AS 'TITULO DE LA PELICULA', 
+GENERO, ANOPROD AS 'AÑO DE PRODUCCION', 
+NOMAPE AS DIRECTOR, 
+CIUDAD AS 'CIUDAD DE RESIDENCIA', 
+PAIS 
+FROM 
+(((cine.pelicula inner join cine.director on cine.pelicula.CODDIRE = cine.director.CODDIRE) 
+inner join cine.ciudad on cine.ciudad.CODCIUDAD = cine.director.CODCIUDAD) 
+inner join cine.pais on cine.ciudad.CODPAIS = cine.pais.CODPAIS) 
+inner JOIN cine.genero on cine.genero.CODGEN = cine.pelicula.CODGEN
+where ANOPROD >= 2013 AND ANOPROD != 2018 AND PAIS = "BRAZIL"
+ORDER BY ANOPROD
